@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
   
       tracker.setTracking(true);
   
-      this.openSeadragon.addHandler('animation', updateZoom); 
+      $this.openSeadragon.addHandler('animation', updateZoom); 
     });
 
     
