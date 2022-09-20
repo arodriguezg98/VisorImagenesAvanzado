@@ -1,9 +1,27 @@
-<hello name="{{ name }}"></hello>
-<p>Start editing to see some magic happen :)</p>
-<div id="toolbar-container"></div>
+<!-- <cdk-virtual-scroll-viewport itemSize="36" class="cdk"> -->
+<div class="files">
+  <ng-container *ngFor="let archivo of archivos$ | async">
+    <div
+      (click)="onClick(archivo)"
+      class="boton"
+      [ngClass]="archivo === archivoSeleccionado ? 'boton-seleccionado' : ''"
+    >
+      <span class="span-plano"> {{ getPlano(archivo) }} </span>
 
-<div
-  class="image-viewer"
-  id="image-viewer"
-  style="width:800px; height:600px;"
-></div>
+      <span class="span-archivo">
+        {{ archivo }}
+      </span>
+    </div>
+  </ng-container>
+</div>
+<!-- </cdk-virtual-scroll-viewport> -->
+
+<div class="browser">
+  <div id="toolbar-container"></div>
+
+  <div
+    class="image-viewer"
+    id="image-viewer"
+    style="width: 800px; height: 600px"
+  ></div>
+</div>

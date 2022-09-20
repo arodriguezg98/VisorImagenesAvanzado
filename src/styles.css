@@ -1,2 +1,9 @@
 /* Add application styles & imports to this file! */
 @import '@recogito/annotorious-openseadragon/dist/annotorious.min.css';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+my-app {
+  display: flex;
+}

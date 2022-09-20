@@ -4,6 +4,9 @@ import * as Annotorious from "@recogito/annotorious-openseadragon";
 import Toolbar from "@recogito/annotorious-toolbar";
 import BetterPolygon from '@recogito/annotorious-better-polygon';
 import SelectorPack from '@recogito/annotorious-selector-pack';
+import { AppService } from "./app.service";
+import { Observable } from "rxjs";
+import { ITermografiaJsonData } from "./models";
 
 @Component({
   selector: "my-app",
@@ -13,8 +16,19 @@ import SelectorPack from '@recogito/annotorious-selector-pack';
 export class AppComponent implements OnInit {
   name = "Angular " + VERSION.major;
 
+  archivos$ = new Observable<string[]>();
+  data$ = new Observable<ITermografiaJsonData>();
+  archivoSeleccionado = '';
+
+  openSeadragon: Viewer | null = null;
+
+  constructor(private readonly appService: AppService) {}
+
   ngOnInit(): void {
-    const openSeadragon = new Viewer({
+    // this.archivos$ = this.appService.getFilesNoParam('Almería_Silestone1_Planta1_Horno');
+    this.archivos$ = this.appService.getFiles();
+
+    this.openSeadragon = new Viewer({
       id: "image-viewer",
       animationTime: 0.4,
       prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
@@ -25,16 +39,36 @@ export class AppComponent implements OnInit {
       },
     });
 
-    openSeadragon.open({
+    this.openSeadragon.open({
       type: "image",
       url: "https://media.istockphoto.com/photos/almeria-cabo-gata-san-jose-beach-village-spain-picture-id1341402035",
     });
 
     const config = {};
-    const annotorious = Annotorious(openSeadragon, config);
+    const annotorious = Annotorious(this.openSeadragon, config);
 
     BetterPolygon(annotorious);
     SelectorPack(annotorious);
     Toolbar(annotorious, document.getElementById("toolbar-container"));
+  }
+
+  // FROM TERMOGRAFIA
+
+  onClick(file: string): void {
+    // this.archivoSeleccionado = file;
+    // this.data$ = this.appService.getJsonFile(file);
+    // // this.seleccionado.next(file);
+
+    this.openSeadragon.open({
+      type: "image",
+      url: file
+    });
+  }
+
+  getPlano(file: string): string {
+    const nombre = file.split('/').slice(-1)[0].split('.')[0];
+    const spl = nombre.split('_');
+
+    return spl[1];
   }
 }

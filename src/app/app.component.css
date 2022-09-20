@@ -1,3 +1,60 @@
-p {
-  font-family: Lato;
+/* :host {
+  height: 100%;
+
+  > cdk-virtual-scroll-viewport {
+    height: 100%;
+    width: 100%;
+    border: 1px solid lightgray;
+  }
+
+  button:first-child {
+    margin-top: 5px;
+  }
+
+  button {
+    margin-left: 15px;
+  }
+} */
+
+/* my-app {
+  display: flex;
+}
+
+.files {
+  max-height: 100vh;
+  overflow-y: scroll;
+} */
+
+.boton {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px;
+
+  cursor: pointer;
+}
+
+.boton:hover {
+  background-color: #c0def0;
+}
+
+.span-plano {
+  width: 20px;
+  padding: 2px;
+  font-size: small;
+  text-align: center;
+  color: white;
+
+  background: #3f51b5;
+  border-radius: 20px;
+  margin-right: 5px;
+}
+
+.span-archivo {
+  width: auto;
+  font-weight: bold;
+}
+
+.boton-seleccionado {
+  background-color: #a9e38b;
 }
