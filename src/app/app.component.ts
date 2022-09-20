@@ -54,14 +54,14 @@ export class AppComponent implements OnInit {
 
   // FROM TERMOGRAFIA
 
-  onClick(file: string): void {
-    // this.archivoSeleccionado = file;
+  onClick(url: string): void {
+    this.archivoSeleccionado = url;
     // this.data$ = this.appService.getJsonFile(file);
     // // this.seleccionado.next(file);
 
     this.openSeadragon.open({
       type: "image",
-      url: file
+      url
     });
   }
 

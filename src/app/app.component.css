@@ -1,29 +1,14 @@
-/* :host {
-  height: 100%;
-
-  > cdk-virtual-scroll-viewport {
-    height: 100%;
-    width: 100%;
-    border: 1px solid lightgray;
-  }
-
-  button:first-child {
-    margin-top: 5px;
-  }
-
-  button {
-    margin-left: 15px;
-  }
-} */
-
-/* my-app {
-  display: flex;
+.files {
+  height: 100vh;
+  overflow: auto;
+  border: 1px solid black;
+  width: 350px;
 }
 
-.files {
-  max-height: 100vh;
-  overflow-y: scroll;
-} */
+.browser {
+  border: 1px solid black;
+  width: 100%;
+}
 
 .boton {
   display: flex;
