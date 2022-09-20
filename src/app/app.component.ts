@@ -84,7 +84,6 @@ export class AppComponent implements OnInit {
 
   onClick(url: string): void {
     this.archivoSeleccionado = url;
-    // this.data$ = this.appService.getJsonFile(file);
 
     this.openSeadragon.open({
       type: "image",
