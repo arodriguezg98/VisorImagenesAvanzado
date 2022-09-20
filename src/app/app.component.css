@@ -1,13 +1,17 @@
 .files {
   height: 100vh;
   overflow: auto;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 350px;
 }
 
 .browser {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 100%;
+}
+
+.image-viewer {
+  height: calc(100% - 53px);
 }
 
 .boton {

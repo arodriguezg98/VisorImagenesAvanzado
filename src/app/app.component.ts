@@ -1,9 +1,9 @@
 import { Component, OnInit, VERSION } from "@angular/core";
-import { Viewer } from "openseadragon";
+import { MouseTracker, PointerMouseTrackerEvent, Viewer } from "openseadragon";
 import * as Annotorious from "@recogito/annotorious-openseadragon";
 import Toolbar from "@recogito/annotorious-toolbar";
-import BetterPolygon from '@recogito/annotorious-better-polygon';
-import SelectorPack from '@recogito/annotorious-selector-pack';
+import BetterPolygon from "@recogito/annotorious-better-polygon";
+import SelectorPack from "@recogito/annotorious-selector-pack";
 import { AppService } from "./app.service";
 import { Observable } from "rxjs";
 import { ITermografiaJsonData } from "./models";
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 
   archivos$ = new Observable<string[]>();
   data$ = new Observable<ITermografiaJsonData>();
-  archivoSeleccionado = '';
+  archivoSeleccionado = "";
 
   openSeadragon: Viewer | null = null;
 
@@ -38,6 +38,47 @@ export class AppComponent implements OnInit {
         scrollToZoom: true,
       },
     });
+
+    const $this = this;
+
+    const updateZoom = function () {
+      const zoom = $this.openSeadragon.viewport.getZoom(true);
+      const imageZoom = $this.openSeadragon.viewport.viewportToImageZoom(zoom);
+
+      // zoomEl.innerHTML = 'Zoom:<br>' + (Math.round(zoom * 100) / 100) +
+      //     '<br><br>Image Zoom:<br>' + (Math.round(imageZoom * 100) / 100);
+
+      console.log('Zoom: ' + zoom, 'Image zoom: ' + imageZoom);
+    };
+
+    this.openSeadragon.addHandler('open', function() {
+      const tracker = new MouseTracker({
+        element: $this.openSeadragon.container,
+        moveHandler: function (event) {
+          const webPoint = (event as PointerMouseTrackerEvent)?.position;
+          const viewportPoint =
+            $this.openSeadragon.viewport.pointFromPixel(webPoint);
+          const imagePoint =
+            $this.openSeadragon.viewport.viewportToImageCoordinates(viewportPoint);
+          const zoom = $this.openSeadragon.viewport.getZoom(true);
+          const imageZoom = $this.openSeadragon.viewport.viewportToImageZoom(zoom);
+  
+          // positionEl.innerHTML = 'Web:<br>' + webPoint.toString() +
+          //     '<br><br>Viewport:<br>' + viewportPoint.toString() +
+          //     '<br><br>Image:<br>' + imagePoint.toString();
+  
+          console.log('Web: ' + webPoint, 'Viewport: ' + viewportPoint, 'Image: ' + imagePoint);
+  
+          updateZoom();
+        },
+      });
+  
+      tracker.setTracking(true);
+  
+      this.openSeadragon.addHandler('animation', updateZoom); 
+    });
+
+    
 
     this.openSeadragon.open({
       type: "image",
@@ -61,13 +102,13 @@ export class AppComponent implements OnInit {
 
     this.openSeadragon.open({
       type: "image",
-      url
+      url,
     });
   }
 
   getPlano(file: string): string {
-    const nombre = file.split('/').slice(-1)[0].split('.')[0];
-    const spl = nombre.split('_');
+    const nombre = file.split("/").slice(-1)[0].split(".")[0];
+    const spl = nombre.split("_");
 
     return spl[1];
   }

@@ -16,7 +16,7 @@ export class AppService {
     const arr: string[] = [];
 
     for(let i = 0; i < 100; i++) {
-      arr.push(`https://picsum.photos/id/${i}/2048`)
+      arr.push(`https://picsum.photos/id/${i}/4096/2048`)
     }
 
     return of(arr);
