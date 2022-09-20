@@ -1,7 +1,11 @@
 import { Component, OnInit, VERSION } from "@angular/core";
 import { MouseTracker, PointerMouseTrackerEvent, Viewer } from "openseadragon";
-import { Observable } from "rxjs";
+import * as Annotorious from "@recogito/annotorious-openseadragon";
+import Toolbar from "@recogito/annotorious-toolbar";
+import BetterPolygon from "@recogito/annotorious-better-polygon";
+import SelectorPack from "@recogito/annotorious-selector-pack";
 import { AppService } from "./app.service";
+import { Observable } from "rxjs";
 import { ITermografiaJsonData } from "./models";
 
 @Component({
@@ -65,19 +69,17 @@ export class AppComponent implements OnInit {
       $this.openSeadragon.addHandler('animation', updateZoom); 
     });
 
-    
-
     this.openSeadragon.open({
       type: "image",
       url: "https://media.istockphoto.com/photos/almeria-cabo-gata-san-jose-beach-village-spain-picture-id1341402035",
     });
 
-    // const config = {};
-    // const annotorious = Annotorious(this.openSeadragon, config);
+    const config = {};
+    const annotorious = Annotorious(this.openSeadragon, config);
 
-    // BetterPolygon(annotorious);
-    // SelectorPack(annotorious);
-    // Toolbar(annotorious, document.getElementById("toolbar-container"));
+    BetterPolygon(annotorious);
+    SelectorPack(annotorious);
+    Toolbar(annotorious, document.getElementById("toolbar-container"));
   }
 
   // FROM TERMOGRAFIA
