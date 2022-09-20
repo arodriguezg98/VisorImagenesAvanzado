@@ -1,11 +1,7 @@
 import { Component, OnInit, VERSION } from "@angular/core";
 import { MouseTracker, PointerMouseTrackerEvent, Viewer } from "openseadragon";
-import * as Annotorious from "@recogito/annotorious-openseadragon";
-import Toolbar from "@recogito/annotorious-toolbar";
-import BetterPolygon from "@recogito/annotorious-better-polygon";
-import SelectorPack from "@recogito/annotorious-selector-pack";
-import { AppService } from "./app.service";
 import { Observable } from "rxjs";
+import { AppService } from "./app.service";
 import { ITermografiaJsonData } from "./models";
 
 @Component({
@@ -45,9 +41,6 @@ export class AppComponent implements OnInit {
       const zoom = $this.openSeadragon.viewport.getZoom(true);
       const imageZoom = $this.openSeadragon.viewport.viewportToImageZoom(zoom);
 
-      // zoomEl.innerHTML = 'Zoom:<br>' + (Math.round(zoom * 100) / 100) +
-      //     '<br><br>Image Zoom:<br>' + (Math.round(imageZoom * 100) / 100);
-
       console.log('Zoom: ' + zoom, 'Image zoom: ' + imageZoom);
     };
 
@@ -60,13 +53,7 @@ export class AppComponent implements OnInit {
             $this.openSeadragon.viewport.pointFromPixel(webPoint);
           const imagePoint =
             $this.openSeadragon.viewport.viewportToImageCoordinates(viewportPoint);
-          const zoom = $this.openSeadragon.viewport.getZoom(true);
-          const imageZoom = $this.openSeadragon.viewport.viewportToImageZoom(zoom);
-  
-          // positionEl.innerHTML = 'Web:<br>' + webPoint.toString() +
-          //     '<br><br>Viewport:<br>' + viewportPoint.toString() +
-          //     '<br><br>Image:<br>' + imagePoint.toString();
-  
+
           console.log('Web: ' + webPoint, 'Viewport: ' + viewportPoint, 'Image: ' + imagePoint);
   
           updateZoom();
@@ -85,12 +72,12 @@ export class AppComponent implements OnInit {
       url: "https://media.istockphoto.com/photos/almeria-cabo-gata-san-jose-beach-village-spain-picture-id1341402035",
     });
 
-    const config = {};
-    const annotorious = Annotorious(this.openSeadragon, config);
+    // const config = {};
+    // const annotorious = Annotorious(this.openSeadragon, config);
 
-    BetterPolygon(annotorious);
-    SelectorPack(annotorious);
-    Toolbar(annotorious, document.getElementById("toolbar-container"));
+    // BetterPolygon(annotorious);
+    // SelectorPack(annotorious);
+    // Toolbar(annotorious, document.getElementById("toolbar-container"));
   }
 
   // FROM TERMOGRAFIA
@@ -98,7 +85,6 @@ export class AppComponent implements OnInit {
   onClick(url: string): void {
     this.archivoSeleccionado = url;
     // this.data$ = this.appService.getJsonFile(file);
-    // // this.seleccionado.next(file);
 
     this.openSeadragon.open({
       type: "image",
